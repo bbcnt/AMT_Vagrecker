@@ -2,7 +2,11 @@ AMT_Vagrecker
 =============
 ## B. Carvalho Bruno & Bignens Julien  ##
 
-This is the repo for the project number 2 of AMT, 2014-2015. You will find here everything you need to get started with our implementation.
+This is the repo for the project number 2 of AMT, 2014-2015. You will find here everything you need to get started with our implementation. You will find at the end of this document some advices and troubleshooting, should you encounter any problems.
+
+## Important notice ##
+
+We assume here that the user ***knows*** about [Vagrant](https://www.vagrantup.com/) and [Docker](https://www.docker.com/) and has [VirtualBox](https://www.virtualbox.org/) installed (provisionner for Vagrant). Vagrant must also be installed. As for Docker it is not necessary, it will be automatically installed in the VM used by Vagrant.
 
 # Quick Overview #
 
@@ -132,7 +136,17 @@ And... that's all. You can now access :
 And you have the deployed application (if you get an error 404, the deploy can take a few minutes, so be patient).
 
 ![Jenkins_build](./images/404.png "First Aspect")
+
+Once it's okay:
+
 ![Jenkins_build](./images/404_no_more.png "First Aspect")
+
+To generate test values:
+
+	http://localhost:9002/AMT_REST/test
+
+
+And this is it, it works! Remember to check [this repo](https://github.com/bbcnt/AMT_REST) for the documentation of the API itself.
 
 We are done with the example, the next parts will be about the implementation.
 
@@ -544,10 +558,18 @@ The roundrobin balancing works just fine. And for the user:
 
 We get the wanted results, who served us though? We don't care.
 
+So, looks like we saw pretty much everything. We hope everything is clear enough.
+
 
 ## One last thing ##
 
 We decided not to put Jenkins and PHPMyAdmin on HAProxy (we could have, like we did with stats), simply because it didn't bring us much to do this, and it gets pretty messy with the mapping between the host, the guests and the Vagrant VM.
+
+# Conclusion #
+
+In conclusion, we believe that our implementation works pretty well. We had started this way before the presentation so we decided to stick with it, so we didn't use the sources that were given to us. The idea here was to understand as much as possible and to make our solution as "light" as possible. This project took us quite some time (most likely the biggest of the semester !) but was very interesting and vast. We had some troubles with Linux, LAMP, all those applications but were able to fix them, so we learned a lot doing this. We also tried to explain as well as possible, without going too much into the useless details, as for example, the whole installation process of MySQL or that kind of things. Thank you for reading this
+
+B. Carvalho Bruno & Bignens Julien,
 
 # Cool things #
 
@@ -562,3 +584,12 @@ Here are a few cool things we noted during the lab:
 
 In every domain directory, there is a "autodeploy" directory that will automatically deploy any application (.ear, .jar, .war) inside it. Pretty useful in our case,
 
+## Download of big FILES ##
+
+Github's maximal size for a file is 50 Mo, so the jenkins and jdk jarS were too heavy, we replaced them by an auto download. You can't download from the oracle website without a workaround like :
+
+	curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.rpm > jdk-8u25-linux-x64.rpm
+	OR
+ 	wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.rpm
+
+It makes the wholce thing a lot lighter (gaining 200 Mo in all). It's possible that some of the dockerfiles extracts on this page still have the "ADD" version (adding in the docker from host), but it's no big deal.
