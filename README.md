@@ -586,10 +586,10 @@ In every domain directory, there is a "autodeploy" directory that will automatic
 
 ## Download of big FILES ##
 
-Github's maximal size for a file is 50 Mo, so the jenkins and jdk jarS were too heavy, we replaced them by an auto download. You can't download from the oracle website without a workaround like :
+Github's maximal size for a file is 50 Mo, so the jenkins and jdk jar were too heavy, we replaced them by an auto download. You can't download with a cli from the oracle website without a workaround like :
 
 	curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.rpm > jdk-8u25-linux-x64.rpm
 	OR
  	wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.rpm
 
-It makes the wholce thing a lot lighter (gaining 200 Mo in all). It's possible that some of the dockerfiles extracts on this page still have the "ADD" version (adding in the docker from host), but it's no big deal.
+It makes the whole thing a lot lighter (gaining 200 Mo in all). It's possible that some of the dockerfiles extracts on this page still have the "ADD" version (adding in the docker from host), but it's no big deal.
